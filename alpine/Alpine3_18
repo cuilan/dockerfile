@@ -1,0 +1,12 @@
+FROM alpine:3.18
+
+LABEL maintainer="zhangyan <zhangyan@weattech.com>"
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && apk upgrade --no-cache \
+    && apk add bash tzdata bind-tools busybox-extras ca-certificates libc6-compat vim wget curl jq git --no-cache \
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && apk del tzdata
+
+CMD ["/bin/bash"]
